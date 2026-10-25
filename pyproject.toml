@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "d1npu"
+version = "0.1.0"
+description = "d1-3B decisions on the Ryzen AI NPU"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+# ONNX Runtime comes from the Ryzen AI Software conda environment
+# (onnxruntime-vitisai); installing the PyPI onnxruntime would shadow it.
+dependencies = [
+    "numpy",
+    "transformers",
+    "tokenizers",
+    "pillow",
+    "ml_dtypes",
+]
+
+[project.optional-dependencies]
+download = ["huggingface_hub"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["d1npu"]

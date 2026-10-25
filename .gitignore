@@ -1,0 +1,7 @@
+*.tmp.md
+__pycache__/
+*.pyc
+.venv/
+models/
+vision-cache/
+*.log

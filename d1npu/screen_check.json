@@ -1,0 +1,134 @@
+{
+  "name": "screen_check",
+  "state": "ブラウザのスクリーンショット。エージェントは事務作業でこのサイトを操作している。",
+  "note": "Questions and yes-thresholds chosen on 59 of 100 screenshots. invert=true: the question asks whether the thing is absent; use 1 - P(yes) as the probability that it is present before applying the threshold.",
+  "questions": [
+    {
+      "key": "login_form",
+      "question": {
+        "type": "noul",
+        "instructions": "ログイン用の入力欄（ユーザー名・メールアドレス・パスワードを打ち込む欄）が画面に表示されているか？",
+        "criteria": {
+          "true": "ログインのための文字入力欄がある",
+          "false": "検索欄など別の目的の入力欄しかない、または入力欄がない。「Google でログイン」などのボタンだけの場合も含む"
+        }
+      },
+      "threshold": 0.9,
+      "invert": false
+    },
+    {
+      "key": "page",
+      "question": {
+        "type": "choice",
+        "instructions": "これは何の画面か？",
+        "criteria": {
+          "login": "ログイン画面（サインインのための画面）",
+          "dashboard": "ウェブサービスのダッシュボード・設定画面・業務ツールの画面",
+          "article": "記事・解説・ドキュメントなど文章を読む画面",
+          "search": "検索した結果が並ぶ画面",
+          "error": "「404」など、ページが見つからない・エラーを知らせる画面"
+        }
+      },
+      "threshold": null,
+      "invert": false
+    },
+    {
+      "key": "error",
+      "question": {
+        "type": "noul",
+        "instructions": "画面にエラーメッセージが表示されているか？",
+        "criteria": {
+          "true": "「404」「見つかりません」「失敗しました」など、失敗を知らせる表示がある",
+          "false": "エラーの表示はない。普通のお知らせ・ヒント・案内は含めない"
+        }
+      },
+      "threshold": 0.9,
+      "invert": false
+    },
+    {
+      "key": "modal",
+      "question": {
+        "type": "noul",
+        "instructions": "ページの上に重なって表示されているダイアログやポップアップは何もないか？"
+      },
+      "threshold": 0.75,
+      "invert": true
+    },
+    {
+      "key": "loading",
+      "question": {
+        "type": "noul",
+        "instructions": "Does the page look like it is still loading?",
+        "criteria": {
+          "true": "The main content is missing and only a spinner, \"loading\" text or blank placeholders are shown.",
+          "false": "The page content is shown."
+        }
+      },
+      "threshold": 0.6,
+      "invert": false
+    },
+    {
+      "key": "next",
+      "question": {
+        "type": "choice",
+        "instructions": "ログインするために次に操作すべきものは？ ログイン画面でない場合や、ログイン用の入力欄が無い場合は「それ以外」。",
+        "criteria": {
+          "username": "ユーザー名・メールアドレスの入力欄（空欄のとき）",
+          "password": "パスワードの入力欄（空欄のとき）",
+          "submit": "ログインのボタン（入力欄が埋まっているとき）",
+          "other": "それ以外（ログイン画面ではない、または入力欄が無い）"
+        }
+      },
+      "threshold": null,
+      "invert": false
+    },
+    {
+      "key": "captcha",
+      "question": {
+        "type": "noul",
+        "instructions": "ロボットでないことを確かめる認証（画像の選択や文字の入力）が表示されているか？",
+        "criteria": {
+          "true": "画像を選ばせる、ゆがんだ文字を打たせるなど、人間かどうかを確かめる問題が出ている",
+          "false": "そのような問題は出ていない"
+        }
+      },
+      "threshold": 0.5,
+      "invert": false
+    },
+    {
+      "key": "table",
+      "question": {
+        "type": "noul",
+        "instructions": "数値が並んだ表（一覧）が表示されているか？"
+      },
+      "threshold": 0.7,
+      "invert": false
+    },
+    {
+      "key": "date_panel",
+      "question": {
+        "type": "noul",
+        "instructions": "Is a calendar panel for picking dates open?",
+        "criteria": {
+          "true": "A calendar with a grid of days is open for choosing dates.",
+          "false": "No calendar grid is open. A date range button or date text alone does not count."
+        }
+      },
+      "threshold": 0.75,
+      "invert": false
+    },
+    {
+      "key": "menu",
+      "question": {
+        "type": "noul",
+        "instructions": "Is a dropdown menu or a list of options open?",
+        "criteria": {
+          "true": "A dropdown or a popup list of options has been opened and overlaps the page.",
+          "false": "No dropdown is open. Sidebars, tabs and toolbars that are always shown do not count."
+        }
+      },
+      "threshold": 0.8,
+      "invert": false
+    }
+  ]
+}
