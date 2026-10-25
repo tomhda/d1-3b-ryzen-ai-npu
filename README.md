@@ -102,10 +102,10 @@ Measured on a Ryzen AI 7 PRO 350 (32 GB, NPU driver 32.0.203.329) with 27 questi
 - Same choice as the official fp32 model on all 27 questions, with a largest probability difference of 0.130.
 - 3.51 answers per second, re-reading the images each pass, at about 1.1 J per answer. CPU usage is unchanged from idle. On the same machine, llama.cpp on the GPU gives 2.45 answers per second at 3.6 J.
 
-On 100 browser screenshots with the 10 screen questions, the wording and thresholds were chosen on 59 screenshots and checked on the other 41:
+On 100 browser screenshots with the 10 screen questions, prompts and thresholds were tuned on 59 screenshots and evaluated on the held-out 41:
 
-- 77.3% correct on the 41 with plain wording
-- 95.8% on the 41 with the wording and thresholds of the preset
+- Baseline prompts: 77.3% accuracy
+- Preset prompts and thresholds: 95.8% accuracy
 
 Choosing the next action from a long list of UI candidates gave about 40% acceptable choices. The 3B model gets similar results without the NPU conversion.
 
