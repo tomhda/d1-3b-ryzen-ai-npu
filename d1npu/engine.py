@@ -174,6 +174,8 @@ class D1:
             d
             for d in ort.get_ep_devices()
             if d.ep_name == "RyzenAILightExecutionProvider"
+            # The provider can also list the integrated GPU.
+            and d.device.type == ort.OrtHardwareDeviceType.NPU
         ]
         if not devices:
             raise RuntimeError(
@@ -303,6 +305,7 @@ class D1:
                 list(dist),
                 threshold=valid[key].get("threshold", 0.5),
                 invert=valid[key].get("invert", False),
+                legend=valid[key]["criteria"] if qtype == "score" else None,
             )
         self.last_timing = timing
         return answers

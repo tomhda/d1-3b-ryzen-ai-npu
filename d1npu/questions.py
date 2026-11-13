@@ -135,8 +135,12 @@ def format_answer(
     probs: list[float],
     threshold: float = DEFAULT_NOUL_THRESHOLD,
     invert: bool = False,
+    legend: list[str] | None = None,
 ) -> dict[str, Any]:
-    """Format one answer in the OpenRouter Decisions API shape."""
+    """Format one answer as the checkpoint's ``api.answer`` does; noul adds ``decision``.
+
+    ``legend`` is a score question's level names, lowest first.
+    """
     if len(labels) != len(probs):
         raise ValueError("labels and probabilities length mismatch")
     if not probs:
@@ -153,18 +157,21 @@ def format_answer(
             "noul": p_yes,
             "decision": bool(p_yes >= threshold),
         }
+    best = max(range(len(probs)), key=probs.__getitem__)
     if qtype == "choice":
-        best = max(range(len(probs)), key=probs.__getitem__)
         return {
             "type": "choice",
             "choice": labels[best],
+            "confidence": probs[best],
             "probabilities": dict(zip(labels, probs)),
         }
     if qtype == "score":
-        expected = sum(i * p for i, p in enumerate(probs))
+        level = float(sum(i * p for i, p in enumerate(probs)))
         return {
             "type": "score",
-            "score": float(expected),
+            "score": level,
+            "confidence": probs[best],
             "probabilities": {str(i): p for i, p in enumerate(probs)},
+            "legend": {str(i): text for i, text in enumerate(legend or labels)},
         }
     raise ValueError(f"unknown question type {qtype!r}")

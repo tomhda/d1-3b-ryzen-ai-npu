@@ -37,6 +37,7 @@ class FormatChoice(unittest.TestCase):
         self.assertEqual(ans["choice"], "b")
         self.assertEqual(
             ans["probabilities"], {"a": 0.1, "b": 0.7, "c": 0.2})
+        self.assertAlmostEqual(ans["confidence"], 0.7)
 
 
 class FormatScore(unittest.TestCase):
@@ -46,6 +47,12 @@ class FormatScore(unittest.TestCase):
         self.assertAlmostEqual(ans["score"], 0.0 * 0.2 + 1.0 * 0.3 + 2.0 * 0.5)
         self.assertEqual(
             ans["probabilities"], {"0": 0.2, "1": 0.3, "2": 0.5})
+        self.assertAlmostEqual(ans["confidence"], 0.5)
+        self.assertEqual(ans["legend"], {"0": "0", "1": "1", "2": "2"})
+
+    def test_legend_names_levels(self):
+        ans = format_answer("score", ["0", "1"], [0.4, 0.6], legend=["low", "high"])
+        self.assertEqual(ans["legend"], {"0": "low", "1": "high"})
 
 
 class Validation(unittest.TestCase):
